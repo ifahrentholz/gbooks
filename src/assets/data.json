@@ -1,0 +1,19 @@
+{
+  "screenshots": [
+    {
+      "img": "assets/images/001.jpg",
+      "description": "Lorem ipsum lalala",
+      "liked": false
+    },
+    {
+      "img": "assets/images/002.jpg",
+      "description": "schallaladölfjadölfjasd ölfjlkajdflö ajsdföl asjdölf ajsdlöfj",
+      "liked": false
+    },
+    {
+      "img": "assets/images/003.jpg",
+      "description": "Blladjfödjföa dölkafjöldasj fölasjd fla dfa ",
+      "liked": false
+    }
+  ]
+}
