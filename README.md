@@ -1,4 +1,4 @@
-# Gbooks2
+# Gbooks3
 
 This project is a testcase on how @angular/material gets implemented into
 an angular 2 project.
