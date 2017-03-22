@@ -1,6 +1,31 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~@angular/material/core/theming/prebuilt/deeppurple-amber";
 
+body {
+  margin: 0;
+  font-family: Roboto, sans-serif;
+}
+
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+md-sidenav-container {
+  height: 100vh;
+}
+
+md-sidenav {
+  width: 320px;
+}
+
+[md-raised-button] {
+  width: 100%;
+}
+
+.toolbar-logo {
+  margin-right: 10px;
+}
 
 .spacer {
   flex: 1 1 auto;
