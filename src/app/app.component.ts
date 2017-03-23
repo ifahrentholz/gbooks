@@ -39,11 +39,6 @@ export class AppComponent implements OnInit {
       });
   }
 
-  queryNewAuthor(query) {
-    console.log("should query the service", query);
-    /*this.http.get(`${this.apiUrl}${this.author}`);*/
-  }
-
   openSidenav() {
     this.sidenav.open();
   }
