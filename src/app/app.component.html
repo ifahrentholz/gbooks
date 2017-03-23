@@ -48,12 +48,18 @@
     </md-tab-group>
   </md-sidenav>
 
-  <md-grid-list cols="{{slidesPerRow}}">
+  <form class="form">
+    <md-input-container class="full-width">
+      <input mdInput #input class="author-input">
+    </md-input-container>
+  </form>
+
+  <md-grid-list cols="{{slidesPerRow}}" *ngIf="books">
     <md-grid-tile *ngFor="let book of books; let i = index">
       <img
         (click)="openSidenav()"
         style="height: 100%; width: auto;"
-        src="{{book.volumeInfo.imageLinks.thumbnail}}"
+        src="{{book.volumeInfo.imageLinks?.thumbnail}}"
         alt="{{book.volumeInfo.title}}">
     </md-grid-tile>
   </md-grid-list>

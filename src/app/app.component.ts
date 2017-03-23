@@ -1,6 +1,7 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {Http} from '@angular/http';
 import {MdSidenav, MdDialog, MdSlider} from '@angular/material';
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-root',
@@ -10,27 +11,37 @@ import {MdSidenav, MdDialog, MdSlider} from '@angular/material';
 export class AppComponent implements OnInit {
   @ViewChild('sidenav') sidenav: MdSidenav;
   @ViewChild('slider') slider: MdSlider;
+  @ViewChild('input') input: ElementRef;
+  input$: any;
   slidesPerRow: number = 5;
   books: Array<any>;
+  author: string = "Stephen King";
+  apiUrl: string = "https://www.googleapis.com/books/v1/volumes?q=";
 
   constructor(private http: Http) {}
 
   ngOnInit() {
-    this.http.get("https://www.googleapis.com/books/v1/volumes?q=stephen%20king")
+    this.queryAPI(this.author);
+    this.input$ = Observable.fromEvent(this.input.nativeElement, 'keyup')
+      .debounceTime(300)
+      .subscribe(() => {
+        this.author = this.input.nativeElement.value;
+        this.queryAPI(this.author);
+      });
+  }
+
+  queryAPI(query) {
+    if(!query) return;
+    this.http.get(`${this.apiUrl}${query}`)
       .map(response => response.json())
       .subscribe((res) => {
         this.books = res.items;
       });
   }
 
-  likeMe(i) {
-    const spaceScreen = this.books[i];
-    return spaceScreen.liked = !spaceScreen.liked
-  }
-
-  deleteMe(i) {
-    this.books.splice(i, 1);
-    console.log(i);
+  queryNewAuthor(query) {
+    console.log("should query the service", query);
+    /*this.http.get(`${this.apiUrl}${this.author}`);*/
   }
 
   openSidenav() {
