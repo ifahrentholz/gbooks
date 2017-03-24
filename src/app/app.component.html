@@ -1,23 +1,6 @@
 <md-toolbar color="primary">
   <md-icon class="toolbar-logo">library_books</md-icon>
   <span>GBooks</span>
-  <button md-icon-button [mdMenuTriggerFor]="menu">
-    <md-icon>more_vert</md-icon>
-  </button>
-  <md-menu #menu="mdMenu">
-    <button md-menu-item>
-      <md-icon>fingerprint</md-icon>
-      <span>Login</span>
-    </button>
-    <button md-menu-item disabled>
-      <md-icon>announcement</md-icon>
-      <span>Issues</span>
-    </button>
-    <button md-menu-item>
-      <md-icon>notifications_off</md-icon>
-      <span>Disable alerts</span>
-    </button>
-  </md-menu>
 </md-toolbar>
 
 <md-sidenav-container>
@@ -28,8 +11,47 @@
         <template md-tab-label>
           Details
         </template>
+
         <div class="tab-content">
-          <button md-raised-button (click)="sidenav.close()" color="accent">CLOSE</button>
+          <p *ngIf="!selectedBook">Please select a book.</p>
+
+          <div *ngIf="selectedBook">
+
+            <div *ngIf="selectedBook.authors">
+              <label>Author:</label>
+              <span *ngFor="let author of selectedBook.authors">{{author}}</span>
+            </div>
+
+            <div *ngIf="selectedBook.description">
+              <label>Description:</label>
+              {{selectedBook.description}}
+            </div>
+
+            <div *ngIf="selectedBook.publishedDate">
+              <label>Publish date:</label>
+              {{selectedBook.publishedDate}}
+            </div>
+
+            <div *ngIf="selectedBook.identifier">
+              <label>ISBN:</label>
+              {{selectedBook.identifier}}
+            </div>
+
+            <div *ngIf="selectedBook.previewLink">
+              <label>Preview:</label>
+              <a target="_black" href="{{selectedBook.previewLink}}">
+                <md-icon>picture_as_pdf</md-icon>
+              </a>
+            </div>
+
+            <div *ngIf="selectedBook.amount">
+              <label>Price:</label>
+              {{selectedBook.amount}} {{selectedBook.currencyCode}}
+            </div>
+          </div>
+
+          <button class="btn-close" md-raised-button (click)="sidenav.close()" color="accent">CLOSE</button>
+
         </div>
       </md-tab>
       <md-tab>
@@ -38,11 +60,17 @@
         </template>
         <div class="tab-content">
           <h1>Settings</h1>
-          <p>Here you can control the various settings associated with your app. There's no need to hit a save button, as
+          <p>Here you can control the various settings associated with your app. There's no need to hit a save button,
+            as
             the values are updated automatically.</p>
-          <label>Number of Books per line</label>
-          <md-slider #slider showTicks="true" max="10" min="1" step="1" thumbLabel="true" value="4" (change)="changeNumberOfBooksPerLine()"></md-slider>
-          <button md-raised-button (click)="sidenav.close()" color="accent">CLOSE</button>
+          <label>Number of Books per line:</label>
+          <md-slider #slider showTicks="true" max="10" min="1" step="1" thumbLabel="true" value="4"
+                     (change)="changeNumberOfBooksPerLine()"></md-slider>
+
+          <label>Number of Results:</label>
+          <md-slider #maxResults showTicks="true" max="40" min="1" step="1" thumbLabel="true" value="10"
+                     (change)="changeNumberOfResults($event)"></md-slider>
+          <button class="btn-close" md-raised-button (click)="sidenav.close()" color="accent">CLOSE</button>
         </div>
       </md-tab>
     </md-tab-group>
@@ -50,15 +78,15 @@
 
   <form class="form">
     <md-input-container class="full-width">
-      <input mdInput #input class="author-input">
+      <input mdInput #input class="author-input" value="{{this.author}}">
     </md-input-container>
   </form>
 
   <md-grid-list cols="{{slidesPerRow}}" *ngIf="books">
     <md-grid-tile *ngFor="let book of books; let i = index">
       <img
-        (click)="openSidenav()"
-        style="height: 100%; width: auto;"
+        (click)="openSidenav(book)"
+        style="height: 100%; width: auto; max-width: 100%; max-height: 100%;"
         src="{{book.volumeInfo.imageLinks?.thumbnail}}"
         alt="{{book.volumeInfo.title}}">
     </md-grid-tile>
