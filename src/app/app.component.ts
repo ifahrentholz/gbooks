@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild, OnDestroy } from '@angular/core';
-import {Http} from '@angular/http';
-import {MdSidenav, MdDialog, MdSlider} from '@angular/material';
+import { Http } from '@angular/http';
+import { MdSidenav, MdDialog, MdSlider } from '@angular/material';
 import { Observable, Subscription } from "rxjs";
 
 @Component({
@@ -77,22 +77,14 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   parseSelectedBook(book) {
-    const authors = this.getValueByKey(book, 'authors');
-    const description = this.getValueByKey(book, 'description');
-    const publishedDate = this.getValueByKey(book, 'publishedDate');
-    const previewLink = this.getValueByKey(book, 'previewLink');
-    const amount = this.getValueByKey(book, 'amount');
-    const currencyCode = this.getValueByKey(book, 'currencyCode');
-    const identifier = this.getValueByKey(book, 'identifier');
-
     this.selectedBook = {
-      authors,
-      description,
-      publishedDate,
-      previewLink,
-      amount,
-      currencyCode,
-      identifier
+      authors: this.getValueByKey(book, 'authors'),
+      description: this.getValueByKey(book, 'description'),
+      publishedDate: this.getValueByKey(book, 'publishedDate'),
+      previewLink: this.getValueByKey(book, 'previewLink'),
+      amount: this.getValueByKey(book, 'amount'),
+      currencyCode: this.getValueByKey(book, 'currencyCode'),
+      identifier: this.getValueByKey(book, 'identifier')
     };
   }
 }
