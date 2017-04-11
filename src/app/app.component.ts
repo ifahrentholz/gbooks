@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { Http } from '@angular/http';
 import { MdSidenav, MdDialog, MdSlider } from '@angular/material';
-import { Observable, Subscription } from "rxjs";
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -15,11 +15,11 @@ export class AppComponent implements OnInit, OnDestroy {
   @ViewChild('input') input: ElementRef;
   input$: Subscription;
   selectedBook: any;
-  slidesPerRow: number = 5;
-  maxResultValue: number = 10;
+  slidesPerRow = 5;
+  maxResultValue = 10;
   books: Array<any>;
-  author: string = "Stephen King";
-  apiUrl: string = "https://www.googleapis.com/books/v1/volumes?q=";
+  author = 'Stephen King';
+  apiUrl = 'https://www.googleapis.com/books/v1/volumes';
 
   constructor(private http: Http) {}
 
@@ -34,14 +34,14 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    //Called once, before the instance is destroyed.
-    //Add 'implements OnDestroy' to the class.
+    // Called once, before the instance is destroyed.
+    // Add 'implements OnDestroy' to the class.
     this.input$.unsubscribe;
   }
 
   queryAPI(query) {
     if(!query) return;
-    const url = this.apiUrl + query + '&maxResults=' + this.maxResultValue;
+    const url = `${this.apiUrl}?q=${query}&maxResults=${this.maxResultValue}`;
     this.http.get(url)
       .map(response => response.json())
       .subscribe((res) => {
